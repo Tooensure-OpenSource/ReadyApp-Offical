@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Data.Repositories.IRepositories.IUserRepositories
 {
-    internal interface IUserAuthRepository
+    public interface IUserAuthRepository
     {
+        bool UserExist();
+        bool UserExistByUsername(string username);
+        bool UserExistByEmail(string email);
     }
 }
