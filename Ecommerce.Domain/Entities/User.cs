@@ -15,5 +15,8 @@ namespace Ecommerce.Domain.Entities
         [Required]
         public string? Username { get; set; }
 
+        [Required, EmailAddress]
+        public string? EmailAddress { get; set; }
+
     }
 }
