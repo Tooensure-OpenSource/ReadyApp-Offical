@@ -44,7 +44,11 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 
         public bool UserExistByUsername(string username)
         {
-            throw new NotImplementedException();
+            // There shouldn't ever be a case where data store has a empty/null username (username required)
+            if (string.IsNullOrWhiteSpace(username)) return false;
+
+            // Access data store and check if there's a user containing username
+            return _dataContext.Users.Any(u => u.Username == username);
         }
     }
 }
