@@ -19,4 +19,8 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.32.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ecommerce.Data\Ecommerce.Data.csproj" />
+  </ItemGroup>
+
 </Project>
