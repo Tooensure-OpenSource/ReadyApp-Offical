@@ -34,7 +34,11 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 
         public bool UserExistByEmail(string email)
         {
-            throw new NotImplementedException();
+            // There shouldn't ever be a case where data store has a empty/null email (email required)
+            if (string.IsNullOrWhiteSpace(email)) return false;
+
+            // Access data store and check if there's a user containing email
+            return _dataContext.Users.Any(u => u.EmailAddress == email);
         }
 
         public bool UserExistById(Guid id)
