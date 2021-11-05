@@ -32,6 +32,12 @@ namespace Ecommerce.Data.Repositories.UserRepositories
                 response.IsSuccessful = false;
                 return response;
             }
+
+            createPasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
             // Adding user to data store
             await _dataContext.Users.AddAsync(user);
             await _dataContext.SaveChangesAsync();
