@@ -10,6 +10,13 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 {
     public class UserAuthRepository : IUserAuthRepository
     {
+        private readonly DataContext _dataContext;
+
+        public UserAuthRepository(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
         public ServiceResponse<Guid> Login(Guid id)
         {
             throw new NotImplementedException();
