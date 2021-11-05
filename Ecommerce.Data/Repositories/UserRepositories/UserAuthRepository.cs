@@ -27,9 +27,9 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             throw new NotImplementedException();
         }
 
-        public bool UserExist()
+        public bool UserExist(User user)
         {
-            throw new NotImplementedException();
+            return UserExistById(user.Id) || UserExistByEmail(user.EmailAddress) || UserExistByUsername(user.Username);
         }
 
         public bool UserExistByEmail(string email)
