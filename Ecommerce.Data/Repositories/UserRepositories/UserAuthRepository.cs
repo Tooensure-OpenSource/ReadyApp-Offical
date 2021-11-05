@@ -18,14 +18,14 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             _dataContext = dataContext;
         }
 
-        public ServiceResponse<Guid> Login(string email, string password)
+        public async Task<ServiceResponse<Guid>> Login(string email, string password)
         {
             throw new NotImplementedException();
         }
 
-        public void Register(User user, string password)
+        public async Task<ServiceResponse<User>> Register(User user, string password)
         {
-           
+            throw new NotImplementedException();
         }
 
         public bool UserExist(User user)
