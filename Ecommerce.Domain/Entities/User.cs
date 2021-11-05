@@ -18,5 +18,8 @@ namespace Ecommerce.Domain.Entities
         [Required, EmailAddress]
         public string? EmailAddress { get; set; }
 
+        [Required]
+        public byte[]? PasswordHash { get; set; }
+
     }
 }
