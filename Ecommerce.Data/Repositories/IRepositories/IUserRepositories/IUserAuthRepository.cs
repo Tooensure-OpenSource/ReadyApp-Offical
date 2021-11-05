@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecommerce.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Ecommerce.Data.Repositories.IRepositories.IUserRepositories
 {
     public interface IUserAuthRepository
     {
+        void Register(User user);
+        ServiceResponse<Guid> Login(Guid id);
 
         /// <summary>
         /// Check if user exist based on other user exist medthods
