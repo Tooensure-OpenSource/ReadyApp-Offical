@@ -23,6 +23,9 @@ namespace Ecommerce.Domain.Entities
 
         [Required]
         public byte[]? PasswordSalt { get; set; }
+        
+        [Required]
+        public bool IsConfirmed { get; set; } = false;
 
     }
 }
