@@ -16,7 +16,7 @@ namespace Ecommerce.Data.Repositories.IRepositories.IUserRepositories
         /// Check if user exist based on other user exist medthods
         /// </summary>
         /// <returns>True if user exist</returns>
-        bool UserExist();
+        bool UserExist(User user);
 
         /// <summary>
         /// Check if there is a user withing the data store with param
