@@ -23,9 +23,22 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             throw new NotImplementedException();
         }
 
-        public async Task<ServiceResponse<User>> Register(User user, string password)
+        public async Task<ServiceResponse<Guid>> Register(User user, string password)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<Guid>();
+            // First check if user exist before proceeding
+            if (UserExist(user))
+            {
+                response.IsSuccessful = false;
+                return response;
+            }
+            // Adding user to data store
+            await _dataContext.Users.AddAsync(user);
+            await _dataContext.SaveChangesAsync();
+
+            response.Data = user.Id;
+            return response;
+            
         }
 
         public bool UserExist(User user)
