@@ -39,7 +39,8 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 
         public bool UserExistById(Guid id)
         {
-            throw new NotImplementedException();
+            // Access data store and check if there's a user containing username
+            return _dataContext.Users.Any(u => u.Id == id);
         }
 
         public bool UserExistByUsername(string username)
