@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Data.Repositories.IRepositories.IUserRepositories
 {
-    public class IUserAuthRepository
+    internal interface IUserAuthRepository
     {
     }
 }
