@@ -17,12 +17,12 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             _dataContext = dataContext;
         }
 
-        public ServiceResponse<Guid> Login(Guid id)
+        public ServiceResponse<Guid> Login(string email, string password)
         {
             throw new NotImplementedException();
         }
 
-        public void Register(User user)
+        public void Register(User user, string password)
         {
             throw new NotImplementedException();
         }
