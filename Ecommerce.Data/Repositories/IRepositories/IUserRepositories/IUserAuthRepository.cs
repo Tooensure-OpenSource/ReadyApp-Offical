@@ -9,7 +9,7 @@ namespace Ecommerce.Data.Repositories.IRepositories.IUserRepositories
 {
     public interface IUserAuthRepository
     {
-        Task<ServiceResponse<User>> Register(User user, string password);
+        Task<ServiceResponse<Guid>> Register(User user, string password);
         Task<ServiceResponse<Guid>> Login(string email, string password);
 
         /// <summary>
