@@ -11,10 +11,14 @@ namespace Ecommerce.Data
     public class DataContext : DbContext
     {
         public DbSet<User>? Users { get; set; }
-
+        
+        /// <summary>
+        /// Comment out onConfiguring override when migrations and database updating is no longer needed.
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-EMFSR5P\\TOOENSURE;Initial Catalog=ReadyAppDb;Integrated Security=True");
         }
     }
 }
