@@ -3,6 +3,7 @@ using Ecommerce.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 
         public void Register(User user, string password)
         {
-            throw new NotImplementedException();
+           
         }
 
         public bool UserExist(User user)
@@ -54,6 +55,15 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 
             // Access data store and check if there's a user containing username
             return _dataContext.Users.Any(u => u.Username == username);
+        }
+
+        private void createPasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
     }
 }
