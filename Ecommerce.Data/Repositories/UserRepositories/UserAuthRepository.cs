@@ -30,6 +30,7 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             if (UserExist(user))
             {
                 response.IsSuccessful = false;
+                response.Message = "User already Exist";
                 return response;
             }
 
@@ -58,7 +59,7 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             if (string.IsNullOrWhiteSpace(email)) return false;
 
             // Access data store and check if there's a user containing email
-            return _dataContext.Users.Any(u => u.EmailAddress == email);
+            return _dataContext.Users.Any(u => u.EmailAddress.ToLower().Equals(email.ToLower()));
         }
 
         public bool UserExistById(Guid id)
@@ -73,7 +74,7 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             if (string.IsNullOrWhiteSpace(username)) return false;
 
             // Access data store and check if there's a user containing username
-            return _dataContext.Users.Any(u => u.Username == username);
+            return _dataContext.Users.Any(u => u.Username.ToLower().Equals(username.ToLower()));
         }
 
         private void createPasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
