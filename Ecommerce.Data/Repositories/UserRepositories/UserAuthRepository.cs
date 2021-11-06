@@ -23,7 +23,7 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             throw new NotImplementedException();
         }
 
-        public async Task<ServiceResponse<Guid>> Register(User user, string password)
+        public ServiceResponse<Guid> Register(User user, string password)
         {
             var response = new ServiceResponse<Guid>();
             // First check if user exist before proceeding
@@ -40,8 +40,8 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             user.PasswordSalt = passwordSalt;
 
             // Adding user to data store
-            await _dataContext.Users.AddAsync(user);
-            await _dataContext.SaveChangesAsync();
+            _dataContext.Users.AddAsync(user);
+            _dataContext.SaveChangesAsync();
 
             response.Data = user.Id;
             return response;
