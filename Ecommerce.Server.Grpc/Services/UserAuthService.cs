@@ -44,5 +44,20 @@ namespace Ecommerce.Server.Grpc.Services
                 Message = userFromRepo.Message
             });
         }
+
+
+        public override Task<UserDtoModel> UserLogin(UserLoginDto request, ServerCallContext context)
+        {
+            var userFromRepo = _userAuth.Login(request.Email, request.Password);
+            // Will install auto mapper in future
+            var serviceResponseToUserDtoModel = new UserDtoModel
+            {
+                Data = userFromRepo.Data,
+                IsSuccessful = userFromRepo.IsSuccessful,
+                Message = userFromRepo.Message
+            };
+
+            return Task.FromResult(serviceResponseToUserDtoModel);
+        }
     }
 }

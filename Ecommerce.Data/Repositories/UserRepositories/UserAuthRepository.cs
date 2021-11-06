@@ -20,7 +20,7 @@ namespace Ecommerce.Data.Repositories.UserRepositories
 
         public ServiceResponse<string> Login(string email, string password)
         {
-            var response = new ServiceResponse<string>();
+            var response = new ServiceResponse<string>() { Data = string.Empty };
             var user = _dataContext.Users.FirstOrDefault(u => u.EmailAddress.ToLower().Equals(email.ToLower()));
 
             if (user == null)
