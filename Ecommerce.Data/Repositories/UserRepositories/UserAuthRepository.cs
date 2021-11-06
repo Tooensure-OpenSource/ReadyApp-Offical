@@ -18,9 +18,28 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             _dataContext = dataContext;
         }
 
-        public async Task<ServiceResponse<Guid>> Login(string email, string password)
+        public ServiceResponse<string> Login(string email, string password)
         {
-            throw new NotImplementedException();
+            var response = new ServiceResponse<string>();
+            var user = _dataContext.Users.FirstOrDefault(u => u.EmailAddress.ToLower().Equals(email.ToLower()));
+
+            if (user == null)
+            {
+                response.IsSuccessful = false;
+                response.Message = "User not found";
+                return response;
+            }
+            else if(!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                response.IsSuccessful = false;
+                response.Message = "Wrong Password";
+                return response;
+            }
+            else
+            {
+                response.Data = user.Id.ToString();
+            }
+            return response;
         }
 
         public ServiceResponse<Guid> Register(User user, string password)
@@ -83,6 +102,23 @@ namespace Ecommerce.Data.Repositories.UserRepositories
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[i] != passwordHash[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
             }
         }
     }

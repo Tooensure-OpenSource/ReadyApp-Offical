@@ -10,7 +10,7 @@ namespace Ecommerce.Data.Repositories.IRepositories.IUserRepositories
     public interface IUserAuthRepository
     {
         ServiceResponse<Guid> Register(User user, string password);
-        Task<ServiceResponse<Guid>> Login(string email, string password);
+        ServiceResponse<string> Login(string email, string password);
 
         /// <summary>
         /// Check if user exist based on other user exist medthods
