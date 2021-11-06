@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option csharp_namespace = "Ecommerce.Server.Grpc.Client";
+
+package userAuth;
+
+// The greeting service definition.
+service UserAuth {
+  // Sends a greeting
+  rpc UserRegister (UserRegisterDto) returns (UserDtoModel);
+}
+
+// The request message containing the user's name.
+message UserRegisterDto {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+}
+
+// The response message containing the greetings.
+message UserDtoModel {
+  string data = 1;
+  bool isSuccessful = 2;
+  string message = 3;
+}

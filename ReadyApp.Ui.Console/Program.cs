@@ -1,15 +1,20 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!");
+using Ecommerce.Server.Grpc.Client;
+using Grpc.Net.Client;
 
 
+var user = new UserRegisterDto
+{
+    Username = "Frank",
+    Email = "frank@gmail.com",
+    Password = "1234"
+};
 
-//var channel = GrpcChannel.ForAddress("https://localhost:5001");
-/*
-var client = new UserAuth;
+var channel = GrpcChannel.ForAddress("http://localhost:5186");
 
-var response = await client.SayHelloAsync(
-    new HelloRequest { Name = "World" });
+var client = new UserAuth.UserAuthClient(channel);
 
-Console.WriteLine(response.Message);
-*/
+var response = await client.UserRegisterAsync(user);
+
+Console.WriteLine($"{response.Data}, {response.IsSuccessful}, {response.Message}");

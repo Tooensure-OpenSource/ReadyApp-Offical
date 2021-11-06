@@ -7,6 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Protos\userAuth.proto" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.19.1" />
@@ -19,7 +23,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Protos\" />
+    <Protobuf Include="Protos\userAuth.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>
