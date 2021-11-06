@@ -1,6 +1,8 @@
+using Ecommerce.Data;
 using Ecommerce.Data.Repositories.IRepositories.IUserRepositories;
 using Ecommerce.Data.Repositories.UserRepositories;
 using Ecommerce.Server.Grpc.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+
+builder.Services.AddDbContext<DataContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("ReadyAppDb"))
+        .EnableSensitiveDataLogging()
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
