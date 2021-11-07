@@ -45,6 +45,12 @@ namespace Ecommerce.Data.Repositories.UserRepositories
         public ServiceResponse<Guid> Register(User user, string password)
         {
             var response = new ServiceResponse<Guid>();
+            if (string.IsNullOrWhiteSpace(user.Username) || string.IsNullOrWhiteSpace(user.EmailAddress))
+            {
+                response.IsSuccessful = false;
+                response.Message = "Invalid User";
+                return response;
+            }
             // First check if user exist before proceeding
             if (UserExist(user))
             {
