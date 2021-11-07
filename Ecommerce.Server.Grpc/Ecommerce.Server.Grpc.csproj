@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\userAuth.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Protobuf Include="Protos\userAuth.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>

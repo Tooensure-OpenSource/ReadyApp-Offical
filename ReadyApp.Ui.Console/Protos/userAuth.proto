@@ -8,6 +8,7 @@ package userAuth;
 service UserAuth {
   // Sends a greeting
   rpc UserRegister (UserRegisterDto) returns (UserDtoModel);
+  rpc UserLogin (UserLoginDto) returns (UserDtoModel);
 }
 
 // The request message containing the user's name.
@@ -15,6 +16,11 @@ message UserRegisterDto {
   string username = 1;
   string email = 2;
   string password = 3;
+}
+
+message UserLoginDto {
+  string email = 1;
+  string password = 2;
 }
 
 // The response message containing the greetings.
