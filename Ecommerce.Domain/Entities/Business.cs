@@ -36,7 +36,8 @@ namespace Ecommerce.Domain.Entities
             Orders = new List<Order>();
         }
 
-        //public Business(User user) => Owners.Add(new Owner(user));
+
+        public Business(User user) => Owners.Add(new Owner(user));
 
         // Not sure if nessecary
         public int OwnerCount() { return Owners.Count(); }
