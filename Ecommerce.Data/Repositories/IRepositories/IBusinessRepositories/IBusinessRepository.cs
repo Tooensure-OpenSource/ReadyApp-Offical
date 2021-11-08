@@ -9,7 +9,7 @@ namespace Ecommerce.Data.Repositories.IRepositories.IBusinessRepositories
 {
     public interface IBusinessRepository
     {
-        ServiceResponse<Guid> Register(Owner owner, Guid guid);
+        ServiceResponse<Guid> Register(Business business, Owner owner);
         bool ExistByUsername(string username);
     }
 }

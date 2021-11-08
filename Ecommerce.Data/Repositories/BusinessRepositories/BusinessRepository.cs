@@ -18,10 +18,10 @@ namespace Ecommerce.Data.Repositories.BusinessRepositories
         }
         public bool ExistByUsername(string username)
         {
-            throw new NotImplementedException();
+            return _dataContext.Businesses.Any(b => b.Username == username);
         }
 
-        public ServiceResponse<Guid> Register(Owner owner, Guid guid)
+        public ServiceResponse<Guid> Register(Business business, Owner owner)
         {
             throw new NotImplementedException();
         }
