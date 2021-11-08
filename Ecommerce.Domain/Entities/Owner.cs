@@ -21,5 +21,8 @@ namespace Ecommerce.Domain.Entities
 
         public Guid UserId { get; set; }
         public User? User { get; set; }
+
+        public Owner() { }
+        public Owner(User user) => User = user;
     }
 }
