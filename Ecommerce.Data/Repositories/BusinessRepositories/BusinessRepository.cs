@@ -10,6 +10,12 @@ namespace Ecommerce.Data.Repositories.BusinessRepositories
 {
     public class BusinessRepository : IBusinessRepository
     {
+        private readonly DataContext _dataContext;
+
+        public BusinessRepository(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
         public bool ExistByUsername(string username)
         {
             throw new NotImplementedException();
