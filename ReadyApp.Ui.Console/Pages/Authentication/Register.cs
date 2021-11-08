@@ -37,6 +37,8 @@ namespace ReadyApp.Client.Console.Pages.Authentication
         {
             var user = new UserRegisterDto
             {
+                FirstName = InputControl.InputOption("First Name"),
+                LastName = InputControl.InputOption("Last Name"),
                 Username = InputControl.InputOption("Username"),
                 Email = InputControl.InputOption("Email"),
                 Password = InputControl.InputOption("Password")

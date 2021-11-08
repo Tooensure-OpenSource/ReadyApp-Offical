@@ -16,6 +16,9 @@ message UserRegisterDto {
   string username = 1;
   string email = 2;
   string password = 3;
+  string firstName = 4;
+  string lastName = 5;
+
 }
 
 message UserLoginDto {

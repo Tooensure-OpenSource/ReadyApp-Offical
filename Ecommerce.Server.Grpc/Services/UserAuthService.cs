@@ -22,7 +22,9 @@ namespace Ecommerce.Server.Grpc.Services
             var user = new User()
             {
                 Username = request.Username,
-                EmailAddress = request.Email
+                EmailAddress = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
             };
 
             var userFromRepo = _userAuth.Register(user, request.Password);
