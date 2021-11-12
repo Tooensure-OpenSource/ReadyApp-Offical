@@ -1,8 +1,8 @@
 using Ecommerce.Data;
-using Ecommerce.Data.Repositories.IRepositories.IUserRepositories;
-using Ecommerce.Data.Repositories.UserRepositories;
+
 using Ecommerce.Server.Grpc.Services;
 using Microsoft.EntityFrameworkCore;
+using Tooensure.DataStructure.RepositoryPattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.Services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<DataContext>(opt =>
         opt.UseSqlServer(builder.Configuration.GetConnectionString("ReadyAppDb"))

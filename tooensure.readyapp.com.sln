@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Data", "Ecommerce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecommerce.Server.Grpc", "Ecommerce.Server.Grpc\Ecommerce.Server.Grpc.csproj", "{093C1F78-2142-439E-B49F-CC0C3AFCB90F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadyApp.Client.Console", "ReadyApp.Ui.Console\ReadyApp.Client.Console.csproj", "{FA0BC17D-863E-4FA2-935B-1ADF19D159E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReadyApp.Client.Console", "ReadyApp.Ui.Console\ReadyApp.Client.Console.csproj", "{FA0BC17D-863E-4FA2-935B-1ADF19D159E3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tooensure.DataStructure.RepositoryPattern", "Tooensure.DataStructure.RepositoryPattern\Tooensure.DataStructure.RepositoryPattern.csproj", "{EAEC35F5-28CD-4A6A-A195-9F609A4E2325}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{FA0BC17D-863E-4FA2-935B-1ADF19D159E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA0BC17D-863E-4FA2-935B-1ADF19D159E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA0BC17D-863E-4FA2-935B-1ADF19D159E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAEC35F5-28CD-4A6A-A195-9F609A4E2325}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAEC35F5-28CD-4A6A-A195-9F609A4E2325}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAEC35F5-28CD-4A6A-A195-9F609A4E2325}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAEC35F5-28CD-4A6A-A195-9F609A4E2325}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

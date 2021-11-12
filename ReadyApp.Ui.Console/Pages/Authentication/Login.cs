@@ -18,7 +18,7 @@ namespace ReadyApp.Client.Console.Pages.Authentication
 
         public async static void Init(string httpRoute)
         {
-            var user = RegisterUser();
+            var user = LoginUser();
 
             var channel = GrpcChannel.ForAddress(httpRoute);
 
@@ -36,9 +36,9 @@ namespace ReadyApp.Client.Console.Pages.Authentication
             System.Console.WriteLine($"{Token} {response.Message}");
         }
 
-        private static UserLoginDto RegisterUser()
+        private static UserLoginDto LoginUser()
         {
-            var user = new UserLoginDto
+            var user = new UserLoginDto()
             {
                 Email = InputControl.InputOption("Email"),
                 Password = InputControl.InputOption("Password")

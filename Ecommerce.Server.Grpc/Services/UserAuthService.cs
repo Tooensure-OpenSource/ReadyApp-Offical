@@ -1,62 +1,56 @@
+using AutoMapper;
 using Ecommerce.Data;
-using Ecommerce.Data.Repositories.IRepositories.IUserRepositories;
 using Ecommerce.Domain.Entities;
 using Ecommerce.Server.Grpc;
 using Grpc.Core;
+using Tooensure.DataStructure.RepositoryPattern;
 
 namespace Ecommerce.Server.Grpc.Services
 {
     public class UserAuthService : UserAuth.UserAuthBase
     {
         private readonly ILogger<GreeterService> _logger;
-        private readonly IUserAuthRepository _userAuth;
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserAuthService(ILogger<GreeterService> logger, IUserAuthRepository userAuth)
+        public UserAuthService(ILogger<GreeterService> logger, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _userAuth = userAuth;
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
+        
 
-        public override Task<UserDtoModel> UserRegister(UserRegisterDto request, ServerCallContext context)
-        {            
-            var user = new User()
+        public override Task<UserDtoModel> UserRegister(UserRegisterDto input, ServerCallContext context)
+        {
+
+            var user = _mapper.Map<User>(input);
+
+            //var request = _unitOfWork.Users.Security.RegisterAsUser(user, input.Password);
+            var request = user.Validate() ? _unitOfWork.Users.Security.RegisterAsUser(user, input.Password) : new ServiceResponse<string>(successful:false);
+
+            var response = new UserDtoModel
             {
-                Username = request.Username,
-                EmailAddress = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
+                Data = request.Data?.ToString(),
+                IsSuccessful = request.Successful,
+                Message = request.Successful ? "Success" : "Denied"
             };
 
-            var userFromRepo = _userAuth.Register(user, request.Password);
 
-            if (!userFromRepo.IsSuccessful)
-            {
-                return Task.FromResult(new UserDtoModel
-                {
-                    Data = string.Empty,
-                    IsSuccessful = userFromRepo.IsSuccessful,
-                    Message = userFromRepo.Message
-                });
-            }
-
-            return Task.FromResult(new UserDtoModel
-            {
-                Data = userFromRepo.Data.ToString(),
-                IsSuccessful = userFromRepo.IsSuccessful,
-                Message = userFromRepo.Message
-            });
+            return Task.FromResult(response);
         }
 
 
-        public override Task<UserDtoModel> UserLogin(UserLoginDto request, ServerCallContext context)
+        public override Task<UserDtoModel> UserLogin(UserLoginDto input, ServerCallContext context)
         {
-            var userFromRepo = _userAuth.Login(request.Email, request.Password);
+            var response = _unitOfWork.Users.Security.LoginAsUser(input.Email, input.Password);
+
             // Will install auto mapper in future
-            var serviceResponseToUserDtoModel = new UserDtoModel
+            var serviceResponseToUserDtoModel = new UserDtoModel()
             {
-                Data = userFromRepo.Data,
-                IsSuccessful = userFromRepo.IsSuccessful,
-                Message = userFromRepo.Message
+                Data = response.Data,
+                IsSuccessful = response.Successful,
+                Message = response.Message
             };
 
             return Task.FromResult(serviceResponseToUserDtoModel);

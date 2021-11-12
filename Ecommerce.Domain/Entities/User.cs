@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecommerce.Domain.Entities.Bases;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Entities
 {
-    public class User
+    public class User : UserBase
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "")]
         public string? FirstName { get; set; }
         [Required]
         public string? LastName { get; set; }
@@ -31,5 +32,22 @@ namespace Ecommerce.Domain.Entities
         [Required]
         public bool IsConfirmed { get; set; } = false;
 
+
+        public override bool Validate()
+        {
+            var requirments = new Dictionary<string, bool>();
+
+            requirments.Add("First name Required", string.IsNullOrWhiteSpace(FirstName));
+            requirments.Add("Last name Required", string.IsNullOrWhiteSpace(LastName));
+
+            requirments.Add("Username Required", string.IsNullOrWhiteSpace(Username));
+            requirments.Add("Email Address Required", string.IsNullOrWhiteSpace(EmailAddress));
+
+            foreach (var item in requirments)
+            {
+                if (item.Value.Equals(true)) return false;
+            }
+            return true;
+        }
     }
 }
