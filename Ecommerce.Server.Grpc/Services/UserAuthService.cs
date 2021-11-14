@@ -4,6 +4,7 @@ using Ecommerce.Domain.Entities;
 using Ecommerce.Server.Grpc;
 using Grpc.Core;
 using Tooensure.DataStructure.RepositoryPattern;
+using Tooensure.Validation.Formatter;
 
 namespace Ecommerce.Server.Grpc.Services
 {
@@ -21,39 +22,65 @@ namespace Ecommerce.Server.Grpc.Services
         }
         
 
-        public override Task<UserDtoModel> UserRegister(UserRegisterDto input, ServerCallContext context)
+        public override Task<UserDtoModel>? UserRegister(UserRegisterDto input, ServerCallContext context)
         {
 
-            var user = _mapper.Map<User>(input);
+            var reqirments = new ValidationFormatter()
+                .AddValidation("First name requied", string.IsNullOrWhiteSpace(input.FirstName))
+                .AddValidation("Last name requied", string.IsNullOrWhiteSpace(input.LastName))
+                .AddValidation("Username requied", string.IsNullOrWhiteSpace(input.Username))
+                .AddValidation("Email requied", string.IsNullOrWhiteSpace(input.Email))
+                .AddValidation("Password requied", string.IsNullOrWhiteSpace(input.Password));
 
-            //var request = _unitOfWork.Users.Security.RegisterAsUser(user, input.Password);
-            var request = user.Validate() ? _unitOfWork.Users.Security.RegisterAsUser(user, input.Password) : new ServiceResponse<string>(successful:false);
+            if (!reqirments.Validate()) return 
+                    Task.FromResult(new UserDtoModel() { Data = String.Empty, IsSuccessful=false, Message=reqirments.GetFaildValidation()});
 
-            var response = new UserDtoModel
-            {
-                Data = request.Data?.ToString(),
-                IsSuccessful = request.Successful,
-                Message = request.Successful ? "Success" : "Denied"
-            };
+            return Task.FromResult(RegisterUserProccess(input));
 
-
-            return Task.FromResult(response);
         }
 
 
         public override Task<UserDtoModel> UserLogin(UserLoginDto input, ServerCallContext context)
         {
-            var response = _unitOfWork.Users.Security.LoginAsUser(input.Email, input.Password);
+            var reqirments = new ValidationFormatter()
+                .AddValidation("Email name requied", string.IsNullOrWhiteSpace(input.Email))
+                .AddValidation("Password requied", string.IsNullOrWhiteSpace(input.Password));
 
-            // Will install auto mapper in future
-            var serviceResponseToUserDtoModel = new UserDtoModel()
-            {
-                Data = response.Data,
-                IsSuccessful = response.Successful,
-                Message = response.Message
-            };
+            if (!reqirments.Validate()) return
+                    Task.FromResult(new UserDtoModel() { Data = String.Empty, IsSuccessful = false, Message = reqirments.GetFaildValidation() });
 
-            return Task.FromResult(serviceResponseToUserDtoModel);
+
+            var user = _unitOfWork.Users.GetByUser(input.Email, input.Password);
+
+            var response = _mapper.Map<UserDtoModel>(user);
+
+            return Task.FromResult(response);
         }
+
+        private UserDtoModel RegisterUserProccess(UserRegisterDto input)
+        {
+
+            /// <summary>
+            /// More studies are needed for password hashing and retrieving hash key so that password is stored in its more
+            /// secure form
+            /// https://stackoverflow.com/questions/3391242/should-i-hash-the-password-before-sending-it-to-the-server-side
+            /// var user = _mapper.Map<User>(input, options => options.ConstructServicesUsing(p => new User(input.Password)));
+            /// </summary>
+            /// var user = _mapper.Map<User>(input);
+            //PasswordHahing.CreatePasswordHash(input.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            //user.PasswordHash = passwordHash;
+            //user.PasswordSalt = passwordSalt;
+
+            var user = _mapper.Map<User>(input, options => options.ConstructServicesUsing(p => new User()));
+
+            var userData = _unitOfWork.Users.Add(user);
+            
+            
+            var response = _mapper.Map<UserDtoModel>(userData);
+
+            return response;
+        }
+
+
     }
 }

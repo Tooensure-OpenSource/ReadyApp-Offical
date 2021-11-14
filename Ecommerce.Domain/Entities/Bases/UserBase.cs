@@ -9,9 +9,10 @@ namespace Ecommerce.Domain.Entities.Bases
 {
     public abstract class UserBase
     {
-        [NotMapped]
-        public bool IsValid => Validate();
 
-        public abstract bool Validate();
+        [NotMapped]
+        public List<KeyValuePair<string, bool>> IsValid => Validate();
+
+        public abstract List<KeyValuePair<string, bool>> Validate();
     }
 }

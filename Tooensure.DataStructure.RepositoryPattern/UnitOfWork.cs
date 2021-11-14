@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Tooensure.DataStructure.RepositoryPattern.Repositorties;
 using Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories;
-using Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories.ISharedRepositories;
-using Tooensure.DataStructure.RepositoryPattern.Repositorties.SharedRepositories;
 
 namespace Tooensure.DataStructure.RepositoryPattern
 {
@@ -19,11 +17,14 @@ namespace Tooensure.DataStructure.RepositoryPattern
         {
             _context = context;
             Users = new UserRepository(_context);
+            // SecurityDir = new SecurityDirectory(_context);
 
         }
 
 
         public IUserRepository Users { get; private set; }
+        // public ISecurityDirectory Security { get; private set; }
+
 
         public int Complete()
         {

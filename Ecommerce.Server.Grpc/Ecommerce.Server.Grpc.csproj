@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Ecommerce.Data\Ecommerce.Data.csproj" />
     <ProjectReference Include="..\Tooensure.DataStructure.RepositoryPattern\Tooensure.DataStructure.RepositoryPattern.csproj" />
+    <ProjectReference Include="..\Tooensure.Validation.Formatter\Tooensure.Validation.Formatter.csproj" />
   </ItemGroup>
 
 </Project>

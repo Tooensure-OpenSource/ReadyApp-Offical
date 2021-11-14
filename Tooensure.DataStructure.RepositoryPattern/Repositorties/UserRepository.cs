@@ -8,85 +8,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories;
-using Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories.ISharedRepositories;
-using Tooensure.DataStructure.RepositoryPattern.Repositorties.SharedRepositories;
 
 namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        private readonly new DataContext _context;
-
-        public UserRepository(DataContext context) : base(context)
-        {
-            _context = context;
-            Security = new AuthRepository(_context);
-            
-        }
-
-        public IAuthRepository Security { get; private set; }
-
-        public User? GetUserByEmail(string? email)
-        {
-            return DataContext?.Users?
-                .SingleOrDefault(u => u.EmailAddress == email);
-        }
-
-        public User? GetByUsername(string username)
-        {
-            return DataContext?.Users?
-                .SingleOrDefault(u => u.Username == username);
-        }
-        public ServiceResponse<string> Login(string email, string? password)
-        {
-            var user = GetUserByEmail(email);
-
-            // should look something like "{response.Successful} {response.Message}, {response.Data}"
-            var response = new ServiceResponse<string>(
-                user?.Id.ToString(),
-                VerifyPasswordHash(password, user?.PasswordHash, user?.PasswordSalt),
-                "Verifing user authentication");
-
-            return response;
-        }
-
-
-        public ServiceResponse<string> Add(User user, string password)
-        {
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
-            // User newUser = new(user) { PasswordHash = passwordHash; PasswordSalt = passwordSalt;}
-
-            // _unitOfWork
-            // .Security.Login(email, password)
-
-            // _unitOfWork
-            // .Users.Security.Register(user, password)
-
-            // _unitOfWork
-            // .Users.Authentication.Register(user, password)
-
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-            Add(user);
-
-            var response = new ServiceResponse<string>(
-                user.Id.ToString(),
-                VerifyPasswordHash(password, user?.PasswordHash, user?.PasswordSalt),
-                "User has been created");
-
-            return response;
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
         private bool VerifyPasswordHash(string? password, byte[]? passwordHash, byte[]? passwordSalt)
         {
             using (var hmac = new HMACSHA512(passwordSalt))
@@ -104,10 +30,67 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             }
         }
 
-        public DataContext? DataContext
+        public UserRepository(DataContext context) : base(context) {}
+
+
+        public ServiceResponse<User> GetByUserEmail(string email)
         {
-            get { return _context as DataContext; }
+            var emailExist = ExistByEmail(email);
+
+            return 
+                new(
+                    Data: DataContext?.Users?.SingleOrDefault(u => u.EmailAddress == email),
+                    Successful: emailExist,
+                    Message: $"[Email Exist {emailExist}]");
         }
 
+        public ServiceResponse<User> GetByUsername(string username)
+        {
+            var usernameExist = ExistByUsername(username);
+
+            return
+                new(
+                    Data: DataContext?.Users?.SingleOrDefault(u => u.Username == username),
+                    Successful: usernameExist,
+                    Message: $"[Username Exist {usernameExist}]");
+        }
+
+        public ServiceResponse<string> GetByUser(string email,string password)
+        {
+            var user = GetByUserEmail(email);
+
+            var validation = VerifyPasswordHash(password, user?.Data?.PasswordHash, user?.Data?.PasswordSalt);
+            return 
+                new(
+                    Data: user?.Data?.Id.ToString(), 
+                    Successful: validation,
+                    Message: $" ~ [Validation {validation}], [{user?.Message}]");
+
+        }
+        public override ServiceResponse<string> Add(User entity)
+        {
+            var user =  base.Add(entity);
+
+            return
+                new(
+                    Data: entity.Id.ToString(),
+                    Successful: user.Successful,
+                    Message: $" ~ [Validation {user.Successful}], [{user?.Message}]");
+
+        }
+        public DataContext? DataContext
+        {
+            get => _context as DataContext;
+        }
+
+        public bool ExistByUsername(string username)
+        {
+            return DataContext?.Users?.Any(u => u.Username == username) ?? throw new ArgumentNullException(nameof(username));
+        }
+
+        public bool ExistByEmail(string email)
+        {
+            return DataContext?.Users?.Any(u => u.EmailAddress == email) ?? throw new ArgumentNullException(nameof(email));
+        }
     }
 }

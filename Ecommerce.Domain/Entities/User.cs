@@ -3,12 +3,30 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Entities
 {
-    public class User : UserBase
+    public static class PasswordHahing
+    {
+        public static void PasswordHahin(string password)
+        {
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+        }
+
+        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
+        }
+    }
+
+    public class User
     {
         [Key]
         public Guid Id { get; set; }
@@ -32,22 +50,26 @@ namespace Ecommerce.Domain.Entities
         [Required]
         public bool IsConfirmed { get; set; } = false;
 
-
-        public override bool Validate()
+        public User()
         {
-            var requirments = new Dictionary<string, bool>();
 
-            requirments.Add("First name Required", string.IsNullOrWhiteSpace(FirstName));
-            requirments.Add("Last name Required", string.IsNullOrWhiteSpace(LastName));
+        }
+        public User(string password)
+        {
+            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+            PasswordHash = passwordHash;
+            PasswordSalt = passwordSalt;
+        }
 
-            requirments.Add("Username Required", string.IsNullOrWhiteSpace(Username));
-            requirments.Add("Email Address Required", string.IsNullOrWhiteSpace(EmailAddress));
-
-            foreach (var item in requirments)
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
             {
-                if (item.Value.Equals(true)) return false;
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
-            return true;
         }
     }
+
+
 }
