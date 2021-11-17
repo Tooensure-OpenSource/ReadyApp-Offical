@@ -13,7 +13,7 @@ namespace Ecommerce.Domain.Entities
         public Guid OwnerId { get; private set; }
 
         [Required(ErrorMessage = "Ownership is required")]
-        public decimal Ownerhship { get; set; }
+        public decimal Ownerhship { get; set; } = 100;
         public string? Name { get; private set; }
 
         public Guid BusinessId { get; set; }
@@ -23,6 +23,10 @@ namespace Ecommerce.Domain.Entities
         public User? User { get; set; }
 
         public Owner() { }
-        public Owner(User user) => User = user;
+        public Owner(User user)
+        {
+            User = user;
+            Name = $"{user.FirstName} {user.LastName}";
+        }
     }
 }

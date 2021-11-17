@@ -17,13 +17,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<DataContext>(opt =>
         opt.UseSqlServer(builder.Configuration.GetConnectionString("ReadyAppDb"))
         .EnableSensitiveDataLogging()
-        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+        .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<GreeterService>();
 app.MapGrpcService<UserAuthService>();
+app.MapGrpcService<BusinessService>();
 
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 

@@ -17,13 +17,17 @@ namespace Tooensure.DataStructure.RepositoryPattern
         {
             _context = context;
             Users = new UserRepository(_context);
+            Businesses = new BusinessRepository(_context);
+            Owners = new OwnerRepository(_context);
+
             // SecurityDir = new SecurityDirectory(_context);
 
         }
 
 
         public IUserRepository Users { get; private set; }
-        // public ISecurityDirectory Security { get; private set; }
+        public IBusinessRepository Businesses { get; private set; }
+        public IOwnerRepository Owners { get; private set; }
 
 
         public int Complete()

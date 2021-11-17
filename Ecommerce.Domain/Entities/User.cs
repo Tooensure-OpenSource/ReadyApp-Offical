@@ -9,22 +9,6 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Domain.Entities
 {
-    public static class PasswordHahing
-    {
-        public static void PasswordHahin(string password)
-        {
-            CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
-        }
-
-        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-    }
 
     public class User
     {
@@ -49,13 +33,15 @@ namespace Ecommerce.Domain.Entities
         
         [Required]
         public bool IsConfirmed { get; set; } = false;
+        public string Token { get; set; }
 
         public User()
         {
 
         }
-        public User(string password)
+        public User(string email, string password)
         {
+            EmailAddress = email;
             CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
             PasswordHash = passwordHash;
             PasswordSalt = passwordSalt;

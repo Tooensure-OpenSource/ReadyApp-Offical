@@ -24,18 +24,34 @@ namespace Ecommerce.Server.Grpc.Services
 
         public override Task<UserDtoModel>? UserRegister(UserRegisterDto input, ServerCallContext context)
         {
-
+            // Step 1: Validate requirments
             var reqirments = new ValidationFormatter()
                 .AddValidation("First name requied", string.IsNullOrWhiteSpace(input.FirstName))
                 .AddValidation("Last name requied", string.IsNullOrWhiteSpace(input.LastName))
                 .AddValidation("Username requied", string.IsNullOrWhiteSpace(input.Username))
                 .AddValidation("Email requied", string.IsNullOrWhiteSpace(input.Email))
-                .AddValidation("Password requied", string.IsNullOrWhiteSpace(input.Password));
+                .AddValidation("Password requied", string.IsNullOrWhiteSpace(input.Password))
+                .AddValidation("Token required", string.IsNullOrWhiteSpace(input.Token));
+
 
             if (!reqirments.Validate()) return 
-                    Task.FromResult(new UserDtoModel() { Data = String.Empty, IsSuccessful=false, Message=reqirments.GetFaildValidation()});
+                    Task.FromResult(new UserDtoModel() { Data = String.Empty, IsSuccessful=false, Message=$"{reqirments.GetFaildValidation()}"});
 
-            return Task.FromResult(RegisterUserProccess(input));
+            // Step 2: Retrieve user
+            var request = _unitOfWork.Users.GetByUserEmail(input.Email);
+
+            if (request.Successful) return
+                    Task.FromResult(new UserDtoModel() { Data = String.Empty, IsSuccessful = false, Message = request.Message });
+
+
+            User user = new(input.Email, input.Password) { FirstName = input.FirstName, LastName = input.LastName, Username = input.Username, Token = input.Token };
+
+
+            var responseFromRepo = _unitOfWork.Users.Add(user);
+
+            var response = _mapper.Map<UserDtoModel>(responseFromRepo);
+
+            return Task.FromResult(response);
 
         }
 

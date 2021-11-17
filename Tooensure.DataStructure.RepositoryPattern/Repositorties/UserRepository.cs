@@ -59,12 +59,11 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         {
             var user = GetByUserEmail(email);
 
-            var validation = VerifyPasswordHash(password, user?.Data?.PasswordHash, user?.Data?.PasswordSalt);
             return 
                 new(
-                    Data: user?.Data?.Id.ToString(), 
-                    Successful: validation,
-                    Message: $" ~ [Validation {validation}], [{user?.Message}]");
+                    Data: user?.Data?.Id.ToString() ?? String.Empty, 
+                    Successful: user.Successful ? VerifyPasswordHash(password, user?.Data?.PasswordHash, user?.Data?.PasswordSalt) : user.Successful,
+                    Message: $" ~ [Validation {user.Successful}], [{user?.Message}]");
 
         }
         public override ServiceResponse<string> Add(User entity)
@@ -91,6 +90,25 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         public bool ExistByEmail(string email)
         {
             return DataContext?.Users?.Any(u => u.EmailAddress == email) ?? throw new ArgumentNullException(nameof(email));
+        }
+
+        ///<summary>
+        ///THIS PURGE METHOD IS ONLY USED FOR DEVELOPMENT TO CLEAN DATA BASE TABLE
+        ///</summary>
+        public void PurgeDatabase()
+        {
+            foreach (var owner in DataContext.Owners)
+            {
+                DataContext.Owners.Remove(owner);
+            }
+            foreach (var business in DataContext.Businesses)
+            {
+                DataContext.Businesses.Remove(business);
+            }
+            foreach (var user in DataContext.Users)
+            {
+                DataContext.Users.Remove(user);
+            }
         }
     }
 }

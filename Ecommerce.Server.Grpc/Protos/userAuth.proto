@@ -18,12 +18,13 @@ message UserRegisterDto {
   string password = 3;
   string firstName = 4;
   string lastName = 5;
-
+  string token = 6;
 }
 
 message UserLoginDto {
   string email = 1;
   string password = 2;
+  string token = 3;
 }
 
 // The response message containing the greetings.

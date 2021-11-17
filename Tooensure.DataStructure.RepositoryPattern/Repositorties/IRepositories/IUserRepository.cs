@@ -13,7 +13,7 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories
         ServiceResponse<User> GetByUserEmail(string email);
         ServiceResponse<string> GetByUser(string email, string password);
 
-
+        void PurgeDatabase();
         bool ExistByUsername(string username);
         bool ExistByEmail(string email);
     }

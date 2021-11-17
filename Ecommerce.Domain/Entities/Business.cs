@@ -17,13 +17,13 @@ namespace Ecommerce.Domain.Entities
         public string? Name { get; set; }
 
         [Required]
-        public string? Username { get; private set; }
+        public string? Username { get; set; }
         public string? Description { get; private set; }
         public string? Type { get; private set; }
 
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
-        public List<Owner>? Owners { get; set; }
+        public List<Owner>? Owners { get; set; } = new List<Owner>();
         public List<Employee>? Employees { get; set; }
         public List<Product>? Products { get; set; }
         public List<Order>? Orders { get; set; }

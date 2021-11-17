@@ -14,6 +14,7 @@ namespace Ecommerce.Server.Grpc.Profiles
                     opt => opt.MapFrom(src => src.Email));
 
             CreateMap<UserRegisterDto, User>()
+                .ConstructUsingServiceLocator()
                 .ForMember(
                     dest => dest.FirstName,
                     opt => opt.MapFrom(src => src.FirstName))
@@ -28,7 +29,6 @@ namespace Ecommerce.Server.Grpc.Profiles
                     opt => opt.MapFrom(src => src.Email));
 
             CreateMap<User, UserRegisterDto>()
-                .ConstructUsingServiceLocator()
                 .ForMember(
                     dest => dest.FirstName,
                     opt => opt.MapFrom(src => src.FirstName))
@@ -53,7 +53,12 @@ namespace Ecommerce.Server.Grpc.Profiles
                 .ForMember(
                     dest => dest.Message,
                     opt => opt.MapFrom(src => src.Message));
+
+
+
+            CreateMap<ServiceResponse<string>, BusinessDtoModel>();
+
         }
-           
+
     }
 }

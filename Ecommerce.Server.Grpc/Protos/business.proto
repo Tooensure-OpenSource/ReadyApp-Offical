@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "Ecommerce.Server.Grpc";
+
+package businessDto;
+
+// The greeting service definition.
+service BusinessDto {
+  // Sends a greeting
+  rpc BusinessRegister (BusinessRegisterDto) returns (BusinessDtoModel);
+
+}
+// The request message containing the user's name.
+message BusinessRegisterDto {
+  string name = 1;
+  string username = 2;
+  string userId = 3;
+}
+
+
+// The response message containing the greetings.
+message BusinessDtoModel {
+  string data = 1;
+  bool successful = 2;
+  string message = 3;
+}
