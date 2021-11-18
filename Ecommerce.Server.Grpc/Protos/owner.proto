@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "Ecommerce.Server.Grpc";
+
+package ownerDto;
+
+// The business service definition.
+service OwnerDto {
+  // Sends a gbusinessreeting
+  rpc GetOwnersFromBusiness (BusinessIdDto) returns (OwnerDtoModel);
+
+}
+
+message BusinessIdDto
+{
+	string businessId = 1;
+}
+// user id refers to the user that the main user thats already a
+// owner of the business is inviting
+message OwnerRegisterDto {
+  string token = 1;
+  string userIdForOwner = 2;
+  string businessId = 3;
+}
+
+
+// The response message containing the business.
+message OwnerDtoModel {
+  string data = 1;
+  bool successful = 2;
+  string message = 3;
+}
