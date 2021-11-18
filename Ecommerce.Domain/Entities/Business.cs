@@ -35,7 +35,10 @@ namespace Ecommerce.Domain.Entities
             Products = new List<Product>();
             Orders = new List<Order>();
         }
-
+        public Business(Guid businessId)
+        {
+            BusinessId = businessId;
+        }
 
         public Business(User user) => Owners.Add(new Owner(user));
 
