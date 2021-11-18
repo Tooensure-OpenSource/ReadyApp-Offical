@@ -9,6 +9,8 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories
 {
     public interface IOwnerRepository : IRepository<Owner>
     {
-        ServiceResponse<Owner> Create(string userId);
+        ServiceResponse<Owner> Add(string userId);
+        //ServiceResponse<string> GetOwners(string businessId);
+
     }
 }

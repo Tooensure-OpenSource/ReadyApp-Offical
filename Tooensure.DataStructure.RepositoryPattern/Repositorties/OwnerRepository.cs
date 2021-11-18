@@ -17,7 +17,7 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         }
         public DataContext? DataContext { get => _context as DataContext; }
 
-        public ServiceResponse<Owner> Create(string userId)
+        public ServiceResponse<Owner> Add(string userId)
         {
 
             return
@@ -27,5 +27,17 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
                     Message: "Business owner");
 
         }
+
+        //public ServiceResponse<string> GetOwners(string businessId)
+        //{
+        //    var owners = DataContext.Owners
+        //        .Where(o => o.BusinessId == Guid.Parse(businessId))
+        //        .Se;
+        //    return
+        //        new(
+        //            Data:"",
+        //            Successful:true,
+        //            Message:"");
+        //}
     }
 }

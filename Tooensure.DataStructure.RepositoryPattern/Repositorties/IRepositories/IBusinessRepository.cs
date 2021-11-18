@@ -14,7 +14,7 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories
         /// </summary>
         /// <param name="username">A business with this username</param>
         /// <returns>A business with specified username</returns>
-        ServiceResponse<Business> GetBusinessByUsername(string username);
+        ServiceResponse<string> GetBusinessByUsername(string username);
 
     }
 }

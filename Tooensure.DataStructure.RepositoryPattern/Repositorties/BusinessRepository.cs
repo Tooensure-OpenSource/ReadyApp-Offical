@@ -16,13 +16,15 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         public DataContext? DataContext { get => _context as DataContext; }
 
 
-        public ServiceResponse<Business> GetBusinessByUsername(string username)
+        public ServiceResponse<string> GetBusinessByUsername(string username)
         {
+            var businessUsername = DataContext?.Businesses?.SingleOrDefault(b => b.Username == username)?.BusinessId.ToString();
+            var businessWithUserExist = !string.IsNullOrEmpty(businessUsername);
             return
                 new(
-                    Data: DataContext?.Businesses?.SingleOrDefault(b => b.Username == username),
-                    Successful: DataContext?.Businesses?.Any(b => b.Username == username) ?? throw new ArgumentNullException(nameof(username)),
-                    Message: "Business with username");
+                    Data: businessUsername ?? string.Empty,
+                    Successful: businessWithUserExist,
+                    Message: businessWithUserExist ? " Search verified" : "Business with username don't exist");
         }
         public ServiceResponse<string> Add(User user,Business entity)
         {
