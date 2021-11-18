@@ -44,5 +44,22 @@ namespace Ecommerce.Server.Grpc.Services
             return Task.FromResult(response);
 
         }
+
+        public override Task<BusinessDtoModel>? BusinessSearch(BusinessUsernameDto input, ServerCallContext context)
+        {
+
+            var reqirments = new ValidationFormatter()
+                .AddValidation("Search username requied", string.IsNullOrWhiteSpace(input.Username));
+
+            if (!reqirments.Validate()) return
+                    Task.FromResult(new BusinessDtoModel() { Data = String.Empty, Successful = false, Message = reqirments.GetFaildValidation() });
+
+            var request = _unitOfWork.Businesses.GetBusinessByUsername(input.Username);
+
+            var response = _mapper.Map<BusinessDtoModel>(request);
+
+            return Task.FromResult(response);
+
+        }
     }
 }
