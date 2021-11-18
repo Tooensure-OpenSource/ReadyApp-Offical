@@ -6,7 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  
   <ItemGroup>
+    <Protobuf Include="Protos\owner.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\business.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\userAuth.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
