@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Ecommerce.Domain.Bases;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tooensure.Validation.Formatter;
 
 namespace Ecommerce.Domain.Entities
 {
-    public class Business
+    public class Business : EntityBase
     {
         [Key]
         public Guid BusinessId { get; private set; }
@@ -23,10 +25,10 @@ namespace Ecommerce.Domain.Entities
 
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
-        public List<Owner>? Owners { get; set; } = new List<Owner>();
-        public List<Employee>? Employees { get; set; }
-        public List<Product>? Products { get; set; }
-        public List<Order>? Orders { get; set; }
+        public virtual List<Owner>? Owners { get; set; } = new List<Owner>();
+        public virtual List<Employee>? Employees { get; set; }
+        public virtual List<Product>? Products { get; set; }
+        public virtual List<Order>? Orders { get; set; }
 
         public Business()
         {
@@ -39,8 +41,32 @@ namespace Ecommerce.Domain.Entities
         {
             BusinessId = businessId;
         }
+        public Business(User user, Business business)
+        {
+            Name = business.Name;
+            Username = business.Username;
+            Description = business.Description;
+            Type = business.Type;
+            CreatedDate = business.CreatedDate;
+            Owners.Add(new Owner(user));
+        }
 
         public Business(User user) => Owners.Add(new Owner(user));
+
+        public override bool Validate()
+        {
+            var requirments = new List<bool>()
+            {
+                !string.IsNullOrWhiteSpace(Name),
+                !string.IsNullOrWhiteSpace(Username)
+            };
+
+            foreach (var requirment in requirments)
+            {
+                if (requirment.Equals(false)) return false;
+            }
+            return true;
+        }
 
         // Not sure if nessecary
         public int OwnerCount() { return Owners.Count(); }

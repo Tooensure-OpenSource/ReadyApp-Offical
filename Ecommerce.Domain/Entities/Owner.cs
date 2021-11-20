@@ -17,10 +17,10 @@ namespace Ecommerce.Domain.Entities
         public string? Name { get; private set; }
 
         public Guid BusinessId { get; set; }
-        public Business? Business { get; set; }
+        public virtual Business? Business { get; set; }
 
         public Guid UserId { get; set; }
-        public User? User { get; set; }
+        public virtual User? User { get; set; }
 
         public Owner() { }
         public Owner(User user)

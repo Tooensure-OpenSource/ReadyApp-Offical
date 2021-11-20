@@ -66,15 +66,15 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
                     Message: $" ~ [Validation {user.Successful}], [{user?.Message}]");
 
         }
-        public override ServiceResponse<string> Add(User entity)
+        public override ServiceResponse2v<string> Add(User entity)
         {
             var user =  base.Add(entity);
 
             return
                 new(
-                    Data: entity.Id.ToString(),
-                    Successful: user.Successful,
-                    Message: $" ~ [Validation {user.Successful}], [{user?.Message}]");
+                    data: entity.Id.ToString(),
+                    successful: user.Successful,
+                    message: $" ~ [Validation {user.Successful}], [{user?.Message}]");
 
         }
         public DataContext? DataContext

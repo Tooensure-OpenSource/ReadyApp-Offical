@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Data;
 using Ecommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,13 +27,25 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
                     Successful: businessWithUserExist,
                     Message: businessWithUserExist ? " Search verified" : "Business with username don't exist");
         }
-        public ServiceResponse<string> Add(User user,Business entity)
+        public override ServiceResponse2v<string> Add(Business entity)
         {
-            Owner owner = new(user);
+            if (!entity.IsValid)
+            {
+                return null;
+            }
+            base.Add(entity);
+            //DataContext?.Businesses.Attach(owner);
+            //DataContext?.Owners?.Attach(owner);
+            //business = DataContext?.Businesses?.Add(entity);
+            //DataContext?.SaveChanges();
 
-            DataContext?.Owners?.Attach(owner);
-            DataContext?.Businesses?.Add(entity);
-            return base.Add(entity);
+            return
+               new(
+                   data: entity.BusinessId.ToString(),
+                   successful: _context.SaveChanges() == 0,
+                   message: $"[ ]");
         }
+
+        
     }
 }
