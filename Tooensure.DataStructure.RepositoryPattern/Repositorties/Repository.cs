@@ -27,17 +27,19 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             return _context.Set<TEntity>().ToList();
         }
 
-        public virtual ServiceResponse<string> Add(TEntity entity)
+        public virtual ServiceResponse2v<string> Add(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
+            var obj = _context.Set<TEntity>().Add(entity);
+
             _context.SaveChanges();
 
             return
                 new(
-                    Data: string.Empty,
-                    Successful: _context.SaveChanges() == 0,
-                    Message: $"[ ]");
+                    data: string.Empty,
+                    successful: _context.SaveChanges() == 0,
+                    message: $"[ ]");
         }
+
         public virtual void Remove(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);

@@ -9,7 +9,7 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories
     public interface IRepository<TEntity> where TEntity : class
     {
         IEnumerable<TEntity> GetAll();
-        ServiceResponse<string> Add(TEntity entity);
+        ServiceResponse2v<string> Add(TEntity entity);
         TEntity? FindById(Guid id);
         void Remove(TEntity entity);
     }

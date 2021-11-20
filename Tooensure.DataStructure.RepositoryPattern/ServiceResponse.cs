@@ -13,5 +13,20 @@ namespace Tooensure.DataStructure.RepositoryPattern
     /// <param name="Message">States the service response suspected data.</param>
     /// <param name="Data">Matches the defined data of the service response.</param>
     /// <param name="Successful">Operation boolean stating if operation successful.</param>
-    public record class ServiceResponse<TEntity>(string? Message, TEntity? Data = default, bool Successful = false);
+    public record class ServiceResponse<TEntity>(string? Message = "", TEntity? Data = default, bool Successful = false);
+    public class ServiceResponse2v<T>
+    {
+        public virtual T? Data { get; set; }
+        public virtual bool Successful { get; set; }
+
+        public virtual string? Message { get; set; }
+
+        public ServiceResponse2v(T data, bool successful, string message)
+        {
+            Data = data;
+            Successful = successful;
+            Message = message;
+        }
+    }
+
 }
