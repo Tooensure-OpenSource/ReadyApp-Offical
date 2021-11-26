@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+    
+<!-- Andriod Note
+Horizontal options dosen;'t really function because it works differently when working with mutiple lines
+The width of a paragraph is the width of the longest line of text
+Word wrapping is governed by the page width (minus the padding)
+-->
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ReadyApp.UI.Mobile.sandbox.AlignmentSandBox">
+    <ContentPage.Content>
+        <StackLayout
+            BackgroundColor="#C4C4C4"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"
+            Padding="15,5,15,5">
+            <Label 
+                Text="Andriod" FontSize="Large"
+                VerticalOptions="Center"
+                HorizontalOptions="CenterAndExpand"/>
+            <Label 
+                Text="Horizontal options dosen't \n function because it works differently when working with mutiple lines. The width of a paragraph is the width of the longest line of text.Word wrapping is governed by the page width (minus the padding)"
+                LineHeight="1.2" FontSize="Small" LineBreakMode="CharacterWrap"
+                VerticalOptions="Start" 
+                HorizontalTextAlignment="Center" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

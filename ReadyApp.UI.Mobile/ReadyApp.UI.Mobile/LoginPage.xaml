@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ReadyApp.UI.Mobile.LoginPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="LightGray">gray</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <!-- Wrapper -->
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <!-- Brand -->
+            <StackLayout HorizontalOptions="Center">
+                <Image WidthRequest="100" Source="readyapp_icon3.png" />
+                <Label x:Name='logoTitle' Text="Ready App" FontSize="Large" />
+            </StackLayout>
+            <!-- Main frame wrapper for user input -->
+            <Frame CornerRadius="10"  Margin="15">
+                <StackLayout WidthRequest="300">
+                    <!-- Collect email-->
+                    <Editor Placeholder="email..."/>
+                    <!-- Collect password-->
+                    <Editor Placeholder="password..."/>
+                    <!-- Collect Submit when reqired fields are successful -->
+                    <Button HorizontalOptions="End" Text="Login" Clicked="OnBtnLoginClicked" />
+                </StackLayout>
+            </Frame>
+            <!-- Natigate user to sign up -->
+            <StackLayout>
+                <Label Text="Don't have a account SignUp" TextColor="{StaticResource LightGray}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+        </StackLayout>
+
+
+    </ContentPage.Content>
+</ContentPage>
