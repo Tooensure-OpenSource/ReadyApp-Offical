@@ -11,7 +11,7 @@ namespace Ecommerce.Data
     public class DataContext : DbContext
     {
 
-        //public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions) { }
+        public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions) { }
         
         public virtual DbSet<User>? Users { get; set; }
         public virtual DbSet<Business>? Businesses { get; set; }
