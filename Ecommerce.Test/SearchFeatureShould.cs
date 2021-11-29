@@ -1,10 +1,6 @@
-using AutoMapper;
 using Ecommerce.Data;
 using Ecommerce.Domain.Entities;
 using Ecommerce.Domain.Models.Features;
-using Ecommerce.Server.Grpc;
-using Ecommerce.Server.Grpc.Services;
-using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
