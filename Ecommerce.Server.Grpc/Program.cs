@@ -21,6 +21,8 @@ builder.Services.AddDbContext<DataContext>(opt =>
 
 var app = builder.Build();
 
+app.UseGrpcWeb();
+
 // Configure the HTTP request pipeline.
 app.MapGrpcService<GreeterService>();
 app.MapGrpcService<UserAuthService>();

@@ -34,7 +34,7 @@ namespace Ecommerce.Domain.Entities
         [Required]
         public bool IsConfirmed { get; set; } = false;
         public string Token { get; set; }
-
+        public List<FriendList> Friends { get; set; } = new List<FriendList>();
         public User()
         {
 
