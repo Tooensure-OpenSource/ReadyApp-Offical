@@ -24,7 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Ecommerce.Data\Ecommerce.Data.csproj" />
     <ProjectReference Include="..\Ecommerce.Domain\Ecommerce.Domain.csproj" />
-    <ProjectReference Include="..\Ecommerce.Server.Grpc\Ecommerce.Server.Grpc.csproj" />
     <ProjectReference Include="..\Tooensure.DataStructure.RepositoryPattern\Tooensure.DataStructure.RepositoryPattern.csproj" />
   </ItemGroup>
 
