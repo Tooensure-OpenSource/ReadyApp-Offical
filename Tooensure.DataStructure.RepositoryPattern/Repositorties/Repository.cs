@@ -17,36 +17,31 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public virtual TEntity? FindById(Guid id)
+        public virtual async Task<TEntity?> FindById(Guid id)
         {
-            return _context.Set<TEntity>().Find(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public virtual ServiceResponse2v<string> Add(TEntity entity)
+        public virtual async void Add(TEntity entity)
         {
-            var obj = _context.Set<TEntity>().Add(entity);
+            _context.Set<TEntity>().Add(entity);
 
-            _context.SaveChanges();
-
-            return
-                new(
-                    data: string.Empty,
-                    successful: _context.SaveChanges() == 0,
-                    message: $"[ ]");
+            await _context.SaveChangesAsync();
         }
 
-        public virtual void Remove(TEntity entity)
+        public virtual async void Remove(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
         }
 
-     
+
 
     }
 }

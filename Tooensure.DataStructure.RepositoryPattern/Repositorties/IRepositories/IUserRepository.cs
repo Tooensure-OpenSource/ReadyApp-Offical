@@ -9,12 +9,10 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        ServiceResponse<User> GetByUsername(string username);
-        ServiceResponse<User> GetByUserEmail(string email);
-        ServiceResponse<string> GetByUser(string email, string password);
-
-        void PurgeDatabase();
-        bool ExistByUsername(string username);
-        bool ExistByEmail(string email);
+        Task<User?> GetByUsername(string username);
+        Task<User?> GetByUserEmail(string email);
+        Task<User?> GetUserByAuth(string email, string password);
+        Task<bool> ExistByUsername(string username);
+        Task<bool> ExistByEmail(string email);
     }
 }

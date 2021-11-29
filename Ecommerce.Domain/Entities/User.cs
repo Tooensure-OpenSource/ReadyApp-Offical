@@ -1,5 +1,4 @@
-﻿using Ecommerce.Domain.Entities.Bases;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,10 +25,10 @@ namespace Ecommerce.Domain.Entities
         public string? EmailAddress { get; set; }
 
         [Required]
-        public byte[]? PasswordHash { get; set; }
+        public byte[] PasswordHash { get; set; }
 
         [Required]
-        public byte[]? PasswordSalt { get; set; }
+        public byte[] PasswordSalt { get; set; }
         
         [Required]
         public bool IsConfirmed { get; set; } = false;
