@@ -31,7 +31,7 @@ namespace Ecommerce.Data
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-J9VF418\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-VI81RPD\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
         }
 }
 }
