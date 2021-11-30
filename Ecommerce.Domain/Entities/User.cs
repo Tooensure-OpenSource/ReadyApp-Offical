@@ -25,15 +25,16 @@ namespace Ecommerce.Domain.Entities
         public string? EmailAddress { get; set; }
 
         [Required]
-        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordHash { get; set; } = new byte[32];
 
         [Required]
-        public byte[] PasswordSalt { get; set; }
+        public byte[] PasswordSalt { get; set; } = new byte[] { 0 };
         
         [Required]
         public bool IsConfirmed { get; set; } = false;
-        public string Token { get; set; }
+        public string? Token { get; set; }
         public List<FriendList> Friends { get; set; } = new List<FriendList>();
+        public List<Business> FavoriteBusinesses { get; set; } = new List<Business>();
         public User()
         {
 

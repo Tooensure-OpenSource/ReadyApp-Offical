@@ -29,13 +29,14 @@ namespace Ecommerce.Domain.Entities
         public virtual List<Employee>? Employees { get; set; }
         public virtual List<Product>? Products { get; set; }
         public virtual List<Order>? Orders { get; set; }
-
+        public List<User> Consumers { get; set; }
         public Business()
         {
             Owners = new List<Owner>();
             Employees = new List<Employee>();
             Products = new List<Product>();
             Orders = new List<Order>();
+            Consumers = new List<User>();
         }
         public Business(Guid businessId)
         {
