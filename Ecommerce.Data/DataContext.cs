@@ -33,5 +33,5 @@ namespace Ecommerce.Data
         {
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-VI81RPD\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
         }
-}
+    }
 }
