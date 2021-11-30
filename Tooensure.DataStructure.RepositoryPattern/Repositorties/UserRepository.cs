@@ -33,33 +33,42 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         public UserRepository(DataContext context) : base(context) {}
 
 
-        public async Task<User?> GetByUserEmail(string email)
+        public async Task<Guid?> UserIdByEmail(string email)
         {
-            var emailExist = ExistByEmail(email);
+            var emailExist = await ExistByEmail(email);
+            User? response;
 
-            if (DataContext?.Users != null)
-                return await DataContext.Users.SingleOrDefaultAsync(u => u.EmailAddress == email);
-            return null;
-        }
-
-        public async Task<User?> GetByUsername(string username)
-        {
-            var usernameExist = ExistByUsername(username);
-
-            if (DataContext?.Users != null)
-                return await DataContext.Users.SingleOrDefaultAsync(u => u.Username == username);
-            return null;
-        }
-        public async Task<User?> GetUserByAuth(string email,string password)
-        {
-            var user = GetByUserEmail(email);
-
-            if (user?.Result != null && VerifyPasswordHash(password, user.Result.PasswordHash, user.Result.PasswordSalt))
+            if (DataContext?.Users != null && emailExist)
             {
-                return await user;
+                response = await DataContext.Users.SingleOrDefaultAsync(u => u.EmailAddress == email);
+                return response?.Id;
             }
+            return null;
+        }
 
+        public async Task<Guid?> UserIdByUsername(string username)
+        {
+            var usernameExist = await ExistByUsername(username);
+            User? response;
 
+            if (DataContext?.Users != null && usernameExist)
+            {
+                response = await DataContext.Users.SingleOrDefaultAsync(u => u.Username == username);
+                return response?.Id;
+            }
+            return null;
+        }
+        public async Task<Guid?> UserIdByAuth(string email,string password)
+        {
+            var validEmail = await ExistByEmail(email);
+            User? response;
+            if (DataContext?.Users != null && validEmail)
+            {
+                response = await DataContext.Users.SingleOrDefaultAsync(u => u.EmailAddress == email);
+                    if (VerifyPasswordHash(password, response.PasswordHash, response.PasswordSalt))
+                        // Issuing Token
+                        return response?.Id;
+            }
             return null;
         }
 
