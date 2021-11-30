@@ -17,27 +17,29 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         }
         public DataContext? DataContext { get => _context as DataContext; }
 
-        public ServiceResponse<Owner> Add(string userId)
+        public Task<Owner?> GetOwner(Guid ownerId)
         {
-
-            return
-                new(
-                    Data: new Owner() { UserId = Guid.Parse(userId), Ownerhship = 100M},
-                    Successful:true,
-                    Message: "Business owner");
-
+            throw new NotImplementedException();
         }
 
-        //public ServiceResponse<string> GetOwners(string businessId)
-        //{
-        //    var owners = DataContext.Owners
-        //        .Where(o => o.BusinessId == Guid.Parse(businessId))
-        //        .Se;
-        //    return
-        //        new(
-        //            Data:"",
-        //            Successful:true,
-        //            Message:"");
-        //}
+        public Task<Guid?> GetOwnerIdByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Owner>> GetOwners(Guid BusinessId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> isOwner(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> isOwner(Guid userId, Guid businessId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

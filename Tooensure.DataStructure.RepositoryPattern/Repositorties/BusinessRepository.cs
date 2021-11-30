@@ -17,35 +17,17 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         public DataContext? DataContext { get => _context as DataContext; }
 
 
-        public ServiceResponse<string> GetBusinessByUsername(string username)
+        /// <summary>
+        /// Retrieve first business containing username in data store
+        /// </summary>
+        /// <param name="username">username in connection to business</param>
+        /// <returns>A business object with username witch can be null if not found</returns>
+        public async Task<Business?> GetBusinessByUsername(string username)
         {
-            var businessUsername = DataContext?.Businesses?.SingleOrDefault(b => b.Username == username)?.BusinessId.ToString();
-            var businessWithUserExist = !string.IsNullOrEmpty(businessUsername);
-            return
-                new(
-                    Data: businessUsername ?? string.Empty,
-                    Successful: businessWithUserExist,
-                    Message: businessWithUserExist ? " Search verified" : "Business with username don't exist");
-        }
-        public override ServiceResponse2v<string> Add(Business entity)
-        {
-            if (!entity.IsValid)
-            {
-                return null;
-            }
-            base.Add(entity);
-            //DataContext?.Businesses.Attach(owner);
-            //DataContext?.Owners?.Attach(owner);
-            //business = DataContext?.Businesses?.Add(entity);
-            //DataContext?.SaveChanges();
 
-            return
-               new(
-                   data: entity.BusinessId.ToString(),
-                   successful: _context.SaveChanges() == 0,
-                   message: $"[ ]");
-        }
-
-        
+            if (DataContext?.Businesses != null)
+                return await DataContext.Businesses.SingleOrDefaultAsync(b => b.Username == username);
+            return null;
+        }        
     }
 }
