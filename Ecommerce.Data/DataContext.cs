@@ -11,7 +11,7 @@ namespace Ecommerce.Data
     public class DataContext : DbContext
     {
 
-        //public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions) { }
+        public DataContext(DbContextOptions<DataContext> dbContextOptions) : base(dbContextOptions) { }
         
         public virtual DbSet<User>? Users { get; set; }
         public virtual DbSet<FriendList>? FriendLists { get; set; }
@@ -29,9 +29,9 @@ namespace Ecommerce.Data
         /// Comment out onConfiguring override when migrations and database updating is no longer needed.
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-VI81RPD\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=DESKTOP-VI81RPD\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
+        //}
     }
 }
