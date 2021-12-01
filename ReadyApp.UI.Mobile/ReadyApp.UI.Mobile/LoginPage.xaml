@@ -24,7 +24,7 @@
                     <!-- Collect password-->
                     <Editor Placeholder="password..."/>
                     <!-- Collect Submit when reqired fields are successful -->
-                    <Button HorizontalOptions="End" Text="Login" Clicked="OnBtnLoginClicked" />
+                    <Button HorizontalOptions="End" Text="Login" />
                 </StackLayout>
             </Frame>
             <!-- Natigate user to sign up -->

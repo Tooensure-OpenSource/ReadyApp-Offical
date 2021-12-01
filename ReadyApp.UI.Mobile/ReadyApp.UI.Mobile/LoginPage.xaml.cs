@@ -13,16 +13,19 @@ namespace ReadyApp.UI.Mobile
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+
         public LoginPage()
         {
             InitializeComponent();
             
         }
 
-        private void OnBtnLoginClicked(object sender, EventArgs e)
-        {
+        //private void OnBtnLoginClicked(object sender, EventArgs e)
+        //{
            
-            //LoginLable.Text = "Logging in.......";
-        }
+        //    //LoginLable.Text = "Logging in.......";
+        //}
+
+
     }
 }
