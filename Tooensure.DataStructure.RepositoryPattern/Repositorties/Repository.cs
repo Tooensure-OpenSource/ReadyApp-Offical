@@ -27,11 +27,10 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
 
-            await _context.SaveChangesAsync();
         }
 
         public virtual async void Remove(TEntity entity)
