@@ -20,13 +20,7 @@ namespace ReadyApp.Api.Rest.Models.Profiles
                     opt => opt.MapFrom(src => src.LastName))
                 .ForMember(
                     dest => dest.Username,
-                    opt => opt.MapFrom(src => src.Username))
-                .ForMember(
-                    dest => dest.Token,
-                    opt => opt.MapFrom(src => src.Password))
-                .ForMember(
-                    dest => dest.FirstName,
-                    opt => opt.MapFrom(src => src.EmailAddress));
+                    opt => opt.MapFrom(src => src.Username));
 
             // After operations the server will reply with a request and if seuccessful the user will need to map to a tranfer object
             CreateMap<User, UserDto>()
@@ -45,6 +39,8 @@ namespace ReadyApp.Api.Rest.Models.Profiles
                 .ForMember(
                     dest => dest.FirstName,
                     opt => opt.MapFrom(src => src.EmailAddress));
+
+            CreateMap<User, User>();
         }
 
     }
