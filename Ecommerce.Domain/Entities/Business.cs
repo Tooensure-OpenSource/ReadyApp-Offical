@@ -26,30 +26,12 @@ namespace Ecommerce.Domain.Entities
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
         public virtual List<Owner>? Owners { get; set; } = new List<Owner>();
-        public virtual List<Employee>? Employees { get; set; }
-        public virtual List<Product>? Products { get; set; }
-        public virtual List<Order>? Orders { get; set; }
-        public List<User> Consumers { get; set; }
+        public virtual List<Employee>? Employees { get; set; } = new List<Employee>();
+        public virtual List<Product> Products { get; set; } = new List<Product>();
+        public virtual List<Order> Orders { get; set; } = new List<Order>();
+        public List<User> Consumers { get; set; } = new List<User>();
         public Business()
         {
-            Owners = new List<Owner>();
-            Employees = new List<Employee>();
-            Products = new List<Product>();
-            Orders = new List<Order>();
-            Consumers = new List<User>();
-        }
-        public Business(Guid businessId)
-        {
-            BusinessId = businessId;
-        }
-        public Business(User user, Business business)
-        {
-            Name = business.Name;
-            Username = business.Username;
-            Description = business.Description;
-            Type = business.Type;
-            CreatedDate = business.CreatedDate;
-            Owners.Add(new Owner(user));
         }
 
         public Business(User user) => Owners.Add(new Owner(user));
@@ -68,11 +50,5 @@ namespace Ecommerce.Domain.Entities
             }
             return true;
         }
-
-        // Not sure if nessecary
-        public int OwnerCount() { return Owners.Count(); }
-        public int EmployeeCount() { return Owners.Count(); }
-        public int ProductCount() { return Owners.Count(); }
-        public int OrderCount() { return Owners.Count(); }
     }
 }
