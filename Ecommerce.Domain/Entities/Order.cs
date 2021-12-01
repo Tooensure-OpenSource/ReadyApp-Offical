@@ -30,24 +30,5 @@ namespace Ecommerce.Domain.Entities
         {
             OrderItems = new List<OrderItem>();
         }
-        public void UpdateTotalCost()
-        {
-            foreach (var item in OrderItems)
-            {
-                TotalCost += item.Product.PriceTag;
-            }
-        }
-
-        public void AddOrderItem(OrderItem orderItem)
-        {
-            if (!OrderItems.Contains(orderItem)) OrderItems.Add(orderItem);
-            if (OrderItems.Contains(orderItem)) OrderItems.FirstOrDefault(orderItem).Quantity++;
-
-        }
-
-        public void RemoveOrderItem(OrderItem orderItem)
-        {
-            if (OrderItems.Contains(orderItem)) OrderItems.Remove(orderItem);
-        }
     }
 }
