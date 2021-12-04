@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Ecommerce.Domain.Entities;
-using Ecommerce.Domain.Models;
+using Ecommerce.Domain.Models.User;
 
 namespace ReadyApp.Api.Rest.Models.Profiles
 {
@@ -11,7 +11,7 @@ namespace ReadyApp.Api.Rest.Models.Profiles
             // User Creation Dto made from the client needs to map to user entity for operation
             // Password is inserted  into the token and will be hashed on the server
             // Hasing and password into token will be enhanced in higher version releases
-            CreateMap<UserCreationDto, User>()
+            CreateMap<AddUserDto, User>()
                 .ForMember(
                     dest => dest.FirstName,
                     opt => opt.MapFrom(src => src.FirstName))
@@ -26,7 +26,7 @@ namespace ReadyApp.Api.Rest.Models.Profiles
             CreateMap<User, UserDto>()
                 .ForMember(
                     dest => dest.UserId,
-                    opt => opt.MapFrom(src => src.Id))
+                    opt => opt.MapFrom(src => src.UserId))
                 .ForMember(
                     dest => dest.FirstName,
                     opt => opt.MapFrom(src => src.FirstName))
