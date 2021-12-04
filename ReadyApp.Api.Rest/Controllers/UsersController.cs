@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Ecommerce.Domain.Entities;
 using Ecommerce.Domain.Models;
+using Ecommerce.Domain.Models.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ReadyApp.Api.Rest.Models;
-using Tooensure.DataStructure.RepositoryPattern;
+using Tooensure.DataStructure.RepositoryPattern.UOW;
 
 namespace ReadyApp.Api.Rest.Controllers
 {
@@ -23,20 +23,34 @@ namespace ReadyApp.Api.Rest.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<UserDto>> GetUser(LoginDto loginDto)
+        public async Task<ActionResult<IEnumerable<UserDto>>> All()
         {
-            var response = await _unitOfWork.Users.UserIdByAuth(loginDto.EmailAddress, loginDto.Password);
-            if (response == null) return BadRequest();
-            return Ok(response);
+            var usersFromRepo = (await _unitOfWork.Users.All())?.ToList();
+
+            var users = new List<UserDto>();
+
+            if(usersFromRepo != null)
+            {
+                foreach (var user in usersFromRepo)
+                {
+                    users.Add(_mapper.Map<UserDto>(user));
+                }
+            }
+            return users;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Guid>> AddUser(UserCreationDto userCreationDto)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserDto>> Get(Guid userId)
         {
-            // Users with existing email should not proceed
-            if (await _unitOfWork.Users.ExistByEmail(userCreationDto.EmailAddress)) return BadRequest("User with email exist");
-            // Users with existing username should not proceed
-            if (await _unitOfWork.Users.ExistByUsername(userCreationDto.Username)) return BadRequest("User with username exist");
+            var user = _mapper.Map<UserDto>(await GetFromRepo(userId));
+            if (user == null) return BadRequest("Can't proccess");
+            return Ok(user);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult<Guid>> AddUser(AddUserDto userCreationDto)
+        {
 
             User userInstance = new(userCreationDto.EmailAddress,userCreationDto.Password);
             var user = _mapper.Map<User>(userCreationDto);
@@ -44,13 +58,16 @@ namespace ReadyApp.Api.Rest.Controllers
             user.PasswordHash = userInstance.PasswordHash;
             user.PasswordSalt = userInstance.PasswordSalt;
 
-            _unitOfWork.Users.Add(user);
+            var response = await _unitOfWork.Users.Create(user);
             _unitOfWork.Complete();
 
-            //var response = await _unitOfWork.Users.FindById(user.Id);
+            if (response == null) return BadRequest();
+            return Ok(response?.UserId);
+        }
 
-            //if (response == null) return BadRequest();
-            return Ok();
+        private async Task<User?> GetFromRepo(Guid userId)
+        {
+            return await _unitOfWork.Users.Get(userId);
         }
 
     }
