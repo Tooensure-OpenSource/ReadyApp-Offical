@@ -17,27 +17,7 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         }
         public DataContext? DataContext { get => _context as DataContext; }
 
-        public Task<Owner?> GetOwner(Guid ownerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Guid?> GetOwnerIdByUserId(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Owner>> GetOwners(Guid BusinessId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> isOwner(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> isOwner(Guid userId, Guid businessId)
+        public Task<Owner?> FindByUserId(Guid userId)
         {
             throw new NotImplementedException();
         }
