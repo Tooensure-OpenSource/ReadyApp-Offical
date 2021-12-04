@@ -3,12 +3,27 @@
 
 ## Description
 
-The *Ready app* is a eccomerce mobile application allowing consumers to place orders and entrepreneur's create busiesses and products with
-much more features modern eccomerce app dosen't currently support.
+The *Ready app* is a eccomerce mobile application allowing consumers to place orders and entrepreneur's create busiesses and products with much more features modern eccomerce app dosen't currently support as a whole.
+
+> **Example:** Business Owner, Employee, Finace, and product Managment
+
+I'll dedicate a ``README.md`` file to each project navigation below.
+
+1. **Frontend**
+***UX-Designs*** : (pendding...)
+***Xarmarin*** : (pendding...)
+***Andriod*** : (pendding...)
+***IOS*** : (pendding...)
+
+2. **Backend**
+***REST Api*** : (pendding...)
+***Domain*** : (pendding...)
+***MSSQL Data*** : (pendding...)
+***Resitory Pattern*** : (pendding...)
 
 The *Ready App* is a social science experiment allowing entrepreneurs, creators, inventors, and consumers to efficently act on trust and trade.
 
-> **NOTE:** project still in its development stage. This repo will show you more on how to get up and running, less on our goal.
+> **NOTE:** project still in its development stage. This repo will provide you with the skills and problem solving techniques I have.
 
 * Project practice
 1. OOP (abstraction, encapsulation, inheritance, polymorphism)
@@ -17,6 +32,8 @@ The *Ready App* is a social science experiment allowing entrepreneurs, creators,
 4. Data persistance
 5. Design Pattern
 6. Code best practice
+
+## Owv
 
 ### Getting Started
 
