@@ -4,7 +4,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
-using Auth0.OidcClient;
+// using Auth0.OidcClient;
 
 namespace ReadyApp.UI.Mobile.Droid
 {
