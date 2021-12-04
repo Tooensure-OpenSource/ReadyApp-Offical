@@ -22,21 +22,6 @@ namespace Ecommerce.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("BusinessUser", b =>
-                {
-                    b.Property<Guid>("ConsumersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FavoriteBusinessesBusinessId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ConsumersId", "FavoriteBusinessesBusinessId");
-
-                    b.HasIndex("FavoriteBusinessesBusinessId");
-
-                    b.ToTable("BusinessUser");
-                });
-
             modelBuilder.Entity("Ecommerce.Domain.Entities.Business", b =>
                 {
                     b.Property<Guid>("BusinessId")
@@ -56,11 +41,16 @@ namespace Ecommerce.Data.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BusinessId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Businesses");
                 });
@@ -71,7 +61,7 @@ namespace Ecommerce.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BusinessId")
+                    b.Property<Guid>("BusinessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -229,7 +219,7 @@ namespace Ecommerce.Data.Migrations
 
             modelBuilder.Entity("Ecommerce.Domain.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -240,6 +230,9 @@ namespace Ecommerce.Data.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("FriendListId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
@@ -263,24 +256,11 @@ namespace Ecommerce.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
+
+                    b.HasIndex("FriendListId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("FriendListUser", b =>
-                {
-                    b.Property<Guid>("FriendsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("FriendsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("FriendListUser");
                 });
 
             modelBuilder.Entity("ProductProductItem", b =>
@@ -298,32 +278,28 @@ namespace Ecommerce.Data.Migrations
                     b.ToTable("ProductProductItem");
                 });
 
-            modelBuilder.Entity("BusinessUser", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Entities.Business", b =>
                 {
                     b.HasOne("Ecommerce.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("ConsumersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ecommerce.Domain.Entities.Business", null)
-                        .WithMany()
-                        .HasForeignKey("FavoriteBusinessesBusinessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Businesses")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Ecommerce.Domain.Entities.Employee", b =>
                 {
-                    b.HasOne("Ecommerce.Domain.Entities.Business", null)
+                    b.HasOne("Ecommerce.Domain.Entities.Business", "Business")
                         .WithMany("Employees")
-                        .HasForeignKey("BusinessId");
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Ecommerce.Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Business");
 
                     b.Navigation("User");
                 });
@@ -386,19 +362,11 @@ namespace Ecommerce.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FriendListUser", b =>
+            modelBuilder.Entity("Ecommerce.Domain.Entities.User", b =>
                 {
                     b.HasOne("Ecommerce.Domain.Entities.FriendList", null)
-                        .WithMany()
-                        .HasForeignKey("FriendsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ecommerce.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Users")
+                        .HasForeignKey("FriendListId");
                 });
 
             modelBuilder.Entity("ProductProductItem", b =>
@@ -427,9 +395,19 @@ namespace Ecommerce.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("Ecommerce.Domain.Entities.FriendList", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Ecommerce.Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("Ecommerce.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Businesses");
                 });
 #pragma warning restore 612, 618
         }
