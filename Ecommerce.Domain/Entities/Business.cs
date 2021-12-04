@@ -29,12 +29,16 @@ namespace Ecommerce.Domain.Entities
         public virtual List<Employee>? Employees { get; set; } = new List<Employee>();
         public virtual List<Product> Products { get; set; } = new List<Product>();
         public virtual List<Order> Orders { get; set; } = new List<Order>();
-        public List<User> Consumers { get; set; } = new List<User>();
         public Business()
         {
         }
 
-        public Business(User user) => Owners.Add(new Owner(user));
+        public Business(User? user, string name, string username)
+        {
+            Name = name;
+            Username = username;
+            Owners.Add(new Owner(user));
+        }
 
         public override bool Validate()
         {
