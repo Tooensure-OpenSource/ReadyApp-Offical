@@ -9,17 +9,19 @@ The *Ready app* is a eccomerce mobile application allowing consumers to place or
 
 I'll dedicate a ``README.md`` file to each project navigation below.
 
-1. **Frontend**
-***UX-Designs*** : (pendding...)
-***Xarmarin*** : (pendding...)
-***Andriod*** : (pendding...)
-***IOS*** : (pendding...)
+**Frontend**
 
-2. **Backend**
-***REST Api*** : (pendding...)
-***Domain*** : (pendding...)
-***MSSQL Data*** : (pendding...)
-***Resitory Pattern*** : (pendding...)
+1. ***UX-Designs*** : (pendding...)
+2. ***Xarmarin*** : (pendding...)
+3. ***Andriod*** : (pendding...)
+4. ***IOS*** : (pendding...)
+
+**Backend**
+
+1. ***REST Api*** : (pendding...)
+2. ***Domain*** : (pendding...)
+3. ***MSSQL Data*** : (pendding...)
+4. ***Resitory Pattern*** : (pendding...)
 
 The *Ready App* is a social science experiment allowing entrepreneurs, creators, inventors, and consumers to efficently act on trust and trade.
 
