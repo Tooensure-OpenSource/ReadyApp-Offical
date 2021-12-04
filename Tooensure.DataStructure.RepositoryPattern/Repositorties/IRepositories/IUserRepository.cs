@@ -25,20 +25,20 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties.IRepositories
         /// </summary>
         /// <param name="username">username referanced to user object</param>
         /// <returns>User Id if there's a user object with username</returns>
-        Task<Guid?> UserIdByUsername(string username);
+        Task<User?> FindByUsername(string username);
         /// <summary>
         /// Get referance to the user object containing email
         /// </summary>
         /// <param name="email">email referanced to user object</param>
         /// <returns>User Id if there's a user object with email</returns>
-        Task<Guid?> UserIdByEmail(string email);
+        Task<User?> FindByEmail(string email);
         /// <summary>
         /// Get referance to the user object containing email and password
         /// </summary>
         /// <param name="email">email referanced to user object</param>
         /// <param name="password">password referanced to user object</param>
         /// <returns>User Id if there's a user object with email and password</returns>
-        Task<Guid?> UserIdByAuth(string email, string password);
+        Task<User?> UserIdByAuth(string email, string password);
 
         /// <summary>
         /// Check if data store contains user object with username
