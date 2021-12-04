@@ -12,7 +12,7 @@ namespace Ecommerce.Domain.Entities
     public class User
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         [Required(ErrorMessage = "")]
         public string? FirstName { get; set; }
         [Required]
@@ -33,13 +33,12 @@ namespace Ecommerce.Domain.Entities
         [Required]
         public bool IsConfirmed { get; set; } = false;
         public string? Token { get; set; }
-        public List<FriendList> Friends { get; set; } = new List<FriendList>();
-        public List<Business> FavoriteBusinesses { get; set; } = new List<Business>();
+        public List<Business> Businesses { get; set; } = new List<Business>();
         public User()
         {
 
         }
-        public User(string email, string password)
+        public User(string? email, string? password)
         {
             EmailAddress = email;
             CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
