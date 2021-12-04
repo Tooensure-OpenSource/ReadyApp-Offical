@@ -29,9 +29,9 @@ namespace Ecommerce.Data
         /// Comment out onConfiguring override when migrations and database updating is no longer needed.
         /// </summary>
         /// <param name="optionsBuilder"></param>
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Data Source=DESKTOP-VI81RPD\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
-        //}
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlServer("Data Source=DESKTOP-4AVB77M\\TOOENSURE;Initial Catalog=ReadyApp;Integrated Security=True");
+        // }
     }
 }
