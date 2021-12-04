@@ -33,7 +33,7 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
         public UserRepository(DataContext context) : base(context) {}
 
 
-        public async Task<Guid?> UserIdByEmail(string email)
+        public async Task<User?> FindByEmail(string email)
         {
             var emailExist = await ExistByEmail(email);
             User? response;
@@ -41,12 +41,12 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             if (DataContext?.Users != null && emailExist)
             {
                 response = await DataContext.Users.SingleOrDefaultAsync(u => u.EmailAddress == email);
-                return response?.Id;
+                return response;
             }
             return null;
         }
 
-        public async Task<Guid?> UserIdByUsername(string username)
+        public async Task<User?> FindByUsername(string username)
         {
             var usernameExist = await ExistByUsername(username);
             User? response;
@@ -54,11 +54,11 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             if (DataContext?.Users != null && usernameExist)
             {
                 response = await DataContext.Users.SingleOrDefaultAsync(u => u.Username == username);
-                return response?.Id;
+                return response;
             }
             return null;
         }
-        public async Task<Guid?> UserIdByAuth(string email,string password)
+        public async Task<User?> UserIdByAuth(string email,string password)
         {
             var validEmail = await ExistByEmail(email);
             User? response;
@@ -67,16 +67,10 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
                 response = await DataContext.Users.SingleOrDefaultAsync(u => u.EmailAddress == email);
                     if (VerifyPasswordHash(password, response.PasswordHash, response.PasswordSalt))
                         // Issuing Token
-                        return response?.Id;
+                        return response;
             }
             return null;
         }
-
-        public DataContext? DataContext
-        {
-            get => _context as DataContext ?? throw new ArgumentNullException(nameof(_context));
-        }
-
         public async Task<bool> ExistByUsername(string username)
         {
             if (DataContext?.Users != null)
@@ -84,11 +78,18 @@ namespace Tooensure.DataStructure.RepositoryPattern.Repositorties
             return false;
         }
 
-        public async Task<bool> ExistByEmail(string email)
+        public async Task<bool> ExistByEmail(string? email)
         {
             if (DataContext?.Users != null)
                 return await DataContext.Users.AnyAsync(u => u.EmailAddress == email);
             return false;
         }
+
+        public DataContext? DataContext
+        {
+            get => _context as DataContext ?? throw new ArgumentNullException(nameof(_context));
+        }
+
+        
     }
 }
