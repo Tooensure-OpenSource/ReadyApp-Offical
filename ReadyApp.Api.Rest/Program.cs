@@ -2,6 +2,7 @@ using Ecommerce.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Tooensure.DataStructure.RepositoryPattern;
+using Tooensure.DataStructure.RepositoryPattern.UOW;
 
 var builder = WebApplication.CreateBuilder(args);
 
