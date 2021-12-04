@@ -15,6 +15,10 @@ namespace Ecommerce.Domain.Entities
         [Required]
         public string? Name { get; set; }
 
+        public Guid BusinessId { get; set; }
+        public virtual Business? Business { get; set; }
+
+
         public Guid UserId { get; set; }
         public User? User { get; set; }
 
